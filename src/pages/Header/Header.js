@@ -52,42 +52,40 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Header(){
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Button 
-            startIcon={<AnchorIcon/>}
-            color="inherit"
-          >
-            Shopping Website
-          </Button>
-          <Button
-            color="inherit"
-          >
-            Home
-          </Button>
-          <Search sx={{ flexGrow: 1 }}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search Products…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          <Button
-            color="inherit"
-          >
-            Orders
-          </Button>
-          <Button
-            color="inherit"
-          >
-            Cart
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <AppBar position="static">
+      <Toolbar>
+        <Button 
+          startIcon={<AnchorIcon/>}
+          color="inherit"
+        >
+          Shopping Website
+        </Button>
+        <Button
+          color="inherit"
+        >
+          Home
+        </Button>
+        <Search sx={{ flexGrow: 1 }}>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search Products…"
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </Search>
+        <Button
+          color="inherit"
+        >
+          Orders
+        </Button>
+        <Button
+          color="inherit"
+        >
+          Cart
+        </Button>
+      </Toolbar>
+    </AppBar>
   )
 }
 
