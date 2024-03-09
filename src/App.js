@@ -1,11 +1,13 @@
-import Header from './pages/Header/Header';
-import Category from './pages/Category/Category';
+import Header from './pages/Header';
+import Category from './pages/Category';
+import Items from './pages/Items';
 
 function App() {
   return (
     <div className="App">
       <Header/>
       <Category/>
+      <Items/>
     </div>
   );
 }
