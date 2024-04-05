@@ -1,8 +1,8 @@
 import React from 'react'
 import Grid from '@mui/material/Grid';
-import ShopItem from '../components/ShopItem/ShopItem';
+import ShopItem from './ShopItem/ShopItem';
 
-export default function Items() {
+export default function GridItems() {
   return (
     <Grid
       container

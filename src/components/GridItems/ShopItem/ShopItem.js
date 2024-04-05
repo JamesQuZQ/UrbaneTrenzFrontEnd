@@ -12,7 +12,8 @@ export default function ShopItem() {
   return (
     <Card sx={{
       maxWidth: 240,
-      m: 1
+      m: 1,
+      p: 1
       }}>
       <CardActionArea>
         <CardMedia

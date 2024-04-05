@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { styled, alpha } from '@mui/material/styles';
+import { Link } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import AnchorIcon from '@mui/icons-material/Anchor';
 import Box from '@mui/material/Box';
@@ -52,18 +53,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Header(){
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" component="nav" elevation={0}>
       <Toolbar>
         <Button 
+          component={Link}
+          to="/"
           startIcon={<AnchorIcon/>}
           color="inherit"
         >
           Shopping Website
-        </Button>
-        <Button
-          color="inherit"
-        >
-          Home
         </Button>
         <Search sx={{ flexGrow: 1 }}>
           <SearchIconWrapper>
@@ -80,6 +78,8 @@ export default function Header(){
           Orders
         </Button>
         <Button
+          component={Link}
+          to="/cart"
           color="inherit"
         >
           Cart

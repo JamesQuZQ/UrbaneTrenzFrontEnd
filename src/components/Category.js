@@ -18,7 +18,7 @@ const theme = createTheme({
 export default function Category() {
   return (
     <ThemeProvider theme={theme}>
-      <AppBar position="relative" color="secondary">
+      <AppBar position="relative" color="secondary" elevation={0}>
         <Toolbar variant="dense" sx={{margin:-1}}>
           <MenuItem>
             <Typography>
