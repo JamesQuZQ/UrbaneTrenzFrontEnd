@@ -50,7 +50,35 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Header(){
+function renderSwitch(page) {
+  switch(page) {
+    case 'home':
+      return (
+        <Search sx={{ flexGrow: 1 }}>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search Products…"
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </Search>
+      );
+    default:
+      return (
+        <Box sx={{ flexGrow: 1 }}>
+          <Typography 
+            variant="h6"
+            textAlign="center"
+          >
+            {page}
+          </Typography>
+        </Box>
+      );
+  }
+}
+
+export default function Header(props){
 
   return (
     <AppBar position="static" component="nav" elevation={0}>
@@ -63,15 +91,9 @@ export default function Header(){
         >
           Shopping Website
         </Button>
-        <Search sx={{ flexGrow: 1 }}>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search Products…"
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </Search>
+        {
+        renderSwitch(props.page)
+        }
         <Button
           color="inherit"
         >

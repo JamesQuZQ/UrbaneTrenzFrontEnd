@@ -11,6 +11,7 @@ export default function CartCard() {
         }}>
         <Typography
           variant="h5"
+          sx={{m:1}}
         >
           Shopping Cart
         </Typography>

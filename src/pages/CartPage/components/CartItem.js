@@ -115,7 +115,7 @@ export default function CartItem() {
             columns={20}
           >
             <ThemeProvider theme={theme}>
-              <Grid item md={2} xs={2} sx={{textAlign:"right", mr:2}}>
+              <Grid item md={2} sm={4} sx={{textAlign:"right", mr:2}}>
                 <Button size="small" variant="text" color="pureBlack" startIcon={<DeleteOutlineIcon size="small"/>}>
                   Remove
                 </Button>
@@ -123,15 +123,15 @@ export default function CartItem() {
               <Grid 
                 item 
                 md={4} 
-                xs={4} 
+                sm={8}
                 sx={{textAlign:"right"}}
               >
                 <Button size="small" variant="text" startIcon={<FavoriteBorderIcon size="small"/>}>
                   Save for Later
                 </Button>
               </Grid>
-              <Grid item md={.5} xs={.5}></Grid>
-              <Grid item md={3} xs={3}>
+              <Grid item md={.5} xs={1}></Grid>
+              <Grid item md={3} sm={6}>
                 <Grid 
                   container 
                   spacing={0} 
@@ -189,7 +189,7 @@ export default function CartItem() {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item md={.5} xs={.5}></Grid>
+              <Grid item md={.5} xs={1}></Grid>
             </ThemeProvider>
           </Grid>
         </Grid>
