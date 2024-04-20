@@ -1,5 +1,5 @@
 import { Typography, Card, Grid, Link} from "@mui/material";
-import CartItem from './CartItem'
+import CartItem from './components/CartItem'
 
 export default function CartCard() {
   return (

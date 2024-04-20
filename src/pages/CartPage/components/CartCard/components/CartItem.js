@@ -25,7 +25,7 @@ export default function CartItem() {
       <Card sx={{
         maxHeight: 200,
         m: 1,
-        p: 1
+        p: 2
         }}>
         {/* Contains item row and quantity row */}
         <Grid
@@ -63,7 +63,6 @@ export default function CartItem() {
                 <Grid item md={3}>
                   <CardActionArea>
                     <Typography
-                      gutterBottom 
                       variant="body1" 
                       sx={{ 
                         overflow: 'hidden',
@@ -71,6 +70,7 @@ export default function CartItem() {
                         display: '-webkit-box',
                         WebkitLineClamp: '2',
                         WebkitBoxOrient: 'vertical',
+                        mb:0.5
                       }}
                       >
                       Doodle Kids Girls Pink I love Shopping Top 
@@ -105,7 +105,6 @@ export default function CartItem() {
           {/* Row for adjusting quanities */}
           <Grid
             item
-            gutterBottom
             md={4}
             xs={4}
             justifyContent="flex-end"

@@ -6,35 +6,44 @@ FormControl} from "@mui/material";
 
 export default function AddressForm(props){
   const validatePhone = (str) => {
-    console.log(errors.phone)
     if(!/^0[0-9]{9}$/.test(str)) 
       return"Invalid phone number format";
-    else return false;
+    else return true;
   }
 
   const validateEmail = (str) => {
     if(!/^\S+@\S+\.\S+$/.test(str)) 
       return"Invalid email format";
-    else return false;
+    else return true;
   }
 
-  const { register, handleSubmit, formState: { errors },} = useForm({
-    mode: "onBlur"
+  const handleClose = (event, reason) => {
+    console.log(event)
+    if (reason && reason === "backdropClick") 
+      return;
+    props.handleClose();
+  }
+
+  const formSubmit = (data, event) => {
+    event.preventDefault();
+    console.log(data);
+    props.setData(data);
+    handleClose();
+  }
+
+  const { register, handleSubmit, formState: { errors }} = useForm({
+    mode: "onBlur | onSubmit"
   });
-  const [data, setData] = React.useState("");
 
   return(
     <Dialog
       open={props.open}
-      onClose={props.handleClose}
+      onClose={handleClose}
       fullWidth
+      disableEscapeKeyDown
       PaperProps={{
         component: 'form',
-        onSubmit: handleSubmit((data)=>{
-          setData(JSON.stringify(data));
-          console.log(data);
-          props.handleClose();
-        })
+        onSubmit:handleSubmit(formSubmit)
       }}
     >
       <DialogTitle>Edit Address</DialogTitle>
@@ -43,33 +52,30 @@ export default function AddressForm(props){
           Add a new address to your account
         </DialogContentText>
         <TextField
-          {...register("firstName")}
+          {...register("firstname")}
           sx={{width: '48.4%', mr:"3%"}}
           margin="normal"
           required
-          id="firstname"
           label="First Name"
-          defaultValue=""
+          defaultValue={props.data===null?"":props.data.firstname}
         />
         <TextField
-          {...register("lastName")}
+          {...register("lastname")}
           sx={{width: '48.4%'}}
           margin="normal"
           required
-          id="lastname"
           label="Last Name"
-          defaultValue=""
+          defaultValue={props.data===null?"":props.data.lastname}
         />
         <TextField
           {...register("phone", {validate: validatePhone})}
           sx={{width: '99.8%'}}
           margin="normal"
           required
-          id="phone"
-          error={errors.phone?.message!==false&&errors.phone?.message!==undefined}
+          error={errors.phone?.message==="Invalid phone number format"}
           helperText={errors.phone?.message}
           label="Phone Number"
-          defaultValue=""
+          defaultValue={props.data===null?"":props.data.phone}
         />
         <TextField
           {...register("address")}
@@ -78,18 +84,16 @@ export default function AddressForm(props){
           required
           multiline
           maxRows={4}
-          id="address"
           label="Street Address"
-          defaultValue=""
+          defaultValue={props.data===null?"":props.data.address}
         />
         <TextField
           {...register("city")}
           sx={{width: '35%', mr:"3%"}}
           margin="normal"
           required
-          id="city"
           label="City/Suburb"
-          defaultValue=""
+          defaultValue={props.data===null?"":props.data.city}
         />
         <FormControl 
           sx={{width: '35%', mr:"3%"}}
@@ -98,10 +102,9 @@ export default function AddressForm(props){
           <InputLabel required>State/Territory</InputLabel>
           <Select
             {...register("state")}
-            id="state"
             required
             label="State/Territory"
-            defaultValue="NSW"
+            defaultValue={props.data===null?"NSW":props.data.state}
           >
             <MenuItem value={'NSW'}>NSW</MenuItem>
             <MenuItem value={'VIC'}>VIC</MenuItem>
@@ -118,9 +121,8 @@ export default function AddressForm(props){
           sx={{width: '23.8%'}}
           margin="normal"
           required
-          id="postcode"
           label="Postcode"
-          defaultValue=""
+          defaultValue={props.data===null?"":props.data.postcode}
         />
         <TextField
           {...register("email", {validate: validateEmail})}
@@ -129,16 +131,15 @@ export default function AddressForm(props){
           required
           multiline
           maxRows={4}
-          id="email"
           label="Email Address"
-          error={errors.email?.message!==false&&errors.email?.message!==undefined}
+          error={errors.email?.message==="Invalid email format"}
           helperText={errors.email?.message}
-          defaultValue=""
+          defaultValue={props.data===null?"":props.data.email}
         />
       </DialogContent>
       
       <DialogActions sx={{m:1}}>
-        <Button onClick={props.handleClose}>Cancel</Button>
+        <Button onClick={handleClose}>Cancel</Button>
         <Button variant="contained" type="submit">Save</Button>
       </DialogActions>
     </Dialog>

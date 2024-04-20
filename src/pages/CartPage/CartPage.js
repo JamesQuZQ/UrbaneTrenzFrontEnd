@@ -1,6 +1,6 @@
 import { AppBar, Grid } from "@mui/material";
 import Header from '../../components/Header'
-import CartCard from "./components/CartCard";
+import CartCard from "./components/CartCard/CartCard";
 import SummaryCard from "./components/SummaryCard";
 
 

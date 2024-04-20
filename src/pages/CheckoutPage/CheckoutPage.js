@@ -1,31 +1,36 @@
 import * as React from 'react';
 
-import { Button, AppBar } from "@mui/material";
+import { Button, AppBar, Grid } from "@mui/material";
+
+import AddressCard from './components/AddressCard/AddressCard';
+import CartCard from './components/CartCard/CartCard';
 import Header from '../../components/Header';
-import AddressForm from "./components/AddressForm";
+import SummaryCard from './components/SummaryCard';
+import PaymentCard from './components/PaymentCard/PaymentCard';
 
 export default function CheckoutPage() {
 
-  const [openForm, setOpenForm] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpenForm(true);
-  };
-
-  const handleClose = () => {
-    setOpenForm(false);
-  };
-  
   return (
     <div className="CheckoutPage">
       <AppBar position="sticky" elevation={0}>
         <Header page="Checkout"/>
       </AppBar>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
-      </Button>
-      <AddressForm open={openForm} handleClose={handleClose}/>
-      
+      <Grid container columns={10} spacing={1} >
+        <Grid item md={7} xs={7}>
+          <AddressCard/>
+          <PaymentCard/>
+          <CartCard/>
+        </Grid>
+        <Grid item md={3} xs={3}
+          sx={{
+            position: 'fixed',
+            top: 56,
+            right:0,
+          }}
+        >
+          <SummaryCard/>
+        </Grid>
+      </Grid>
     </div>
   );
 }
