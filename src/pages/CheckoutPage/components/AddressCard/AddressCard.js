@@ -58,7 +58,7 @@ export default function AddressCard() {
                 Delivery Address
               </Typography>
               <Box display="flex">
-                <Link
+                {/* <Link
                   component="button"
                   color="inherit"
                   variant="body2"
@@ -66,8 +66,8 @@ export default function AddressCard() {
                   sx={{fontSize:12}}
                 >
                   Change Address
-                </Link>
-                <Typography sx={{fontSize:12,ml:0.5, mt:0.5}}>{'>'}</Typography>
+                </Link> */}
+                {/* <Typography sx={{fontSize:12,ml:0.5, mt:0.5}}>{'>'}</Typography> */}
               </Box>
             </Box>
             <AddressSubCard 

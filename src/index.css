@@ -1,4 +1,10 @@
 body {
   overflow-x: hidden; /* Hide horizontal scrollbar */
-  margin: 0
+  margin: 0;
+  background-color: whitesmoke
+}
+
+@font-face {
+  font-family: "AnotherDanger";
+  src: url("./fonts/Title.otf")
 }

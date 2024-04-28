@@ -1,7 +1,20 @@
+import React, { useState, useEffect } from 'react';
+
 import { Card, Divider, Box, Typography, Button } from "@mui/material";
 import { Link } from 'react-router-dom';
 
-export default function SummaryCard() {
+export default function SummaryCard(props) {
+
+  var {data} = props;
+
+  function sum( ) {
+    var sum = 0;
+    for( var product in data ) {
+      sum += data[product].count * data[product].details.Price
+    }
+    return sum;
+  }
+
   return (
     <div className="CartCard">
       <Card sx={{
@@ -20,6 +33,7 @@ export default function SummaryCard() {
             variant="contained"
             fullWidth={true}
             component={Link}
+            disabled={data===undefined||Object.keys(data).length===0}
             to="/checkout"
             sx={{borderRadius: 25}}
           >
@@ -45,14 +59,14 @@ export default function SummaryCard() {
               variant="body1"
               sx={{pl: 0.5}}
             >
-               (3 items)
+               ({data?data.length:0} items)
             </Typography>
           </Box>
 
           <Typography
             variant="body1"
           >
-            $1000
+            ${data?sum():0}
           </Typography>
         </Box>
 
@@ -64,14 +78,13 @@ export default function SummaryCard() {
           <Typography
             variant="body2"
           >
-            Shipping
+            Tax
           </Typography>
 
           <Typography
             variant="caption"
-            color="green"
           >
-            Free
+            Calculated at Checkout
           </Typography>
         </Box>
 
@@ -81,10 +94,10 @@ export default function SummaryCard() {
           sx={{m:1}}
         >
           <Typography
-            variant="body1"
+            variant="body2"
             sx={{ fontWeight: 'bold' }}
           >
-            Tax
+            Shipping
           </Typography>
 
           <Typography
@@ -132,7 +145,7 @@ export default function SummaryCard() {
             sx={{ fontWeight: 'bold' }}
             color="green"
           >
-            $1000
+            ${data?sum():0}
           </Typography>
         </Box>
 

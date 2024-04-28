@@ -1,7 +1,18 @@
-import { Typography, Card, Grid, Link} from "@mui/material";
+import { Typography, Card, Box} from "@mui/material";
 import CartItem from './components/CartItem'
 
-export default function CartCard() {
+export default function CartCard(props) {
+
+  var {data} = props
+
+  const listItems = data&&data.length!=0 ? 
+  Object.keys(data).map(product => 
+    <CartItem 
+    key={data[product].details.ProductID} 
+    item={data[product].details}
+    count={data[product].count} />
+  ):<Box>No Items </Box>;
+
   return (
     <div className="CartCard">
       <Card sx={{
@@ -15,29 +26,10 @@ export default function CartCard() {
         >
           Review Item Details
         </Typography>
-        <CartItem />
-        <CartItem />
-        <CartItem />
-        <Grid 
-          container 
-          columns={5} 
-          justifyContent="flex-end"
-          textAlign={"right"}
-          sx={{pr:5}}
-        >
-          <Grid item xs={1} md={1}>
-            <Link variant="body1">
-              Remove all items
-            </Link>
-          </Grid>
-          <Grid item xs={1} md={1}>
-            <Typography
-              variant="body1"
-            >
-              Subtotal: xxx
-            </Typography>
-          </Grid>
-        </Grid>
+        {
+          listItems
+        }
+
       </Card>
     </div>
   );

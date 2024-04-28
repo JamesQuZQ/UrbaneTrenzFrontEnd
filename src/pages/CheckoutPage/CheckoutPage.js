@@ -1,5 +1,4 @@
-import * as React from 'react';
-
+import React, { useState, useEffect } from 'react';
 import { Button, AppBar, Grid } from "@mui/material";
 
 import AddressCard from './components/AddressCard/AddressCard';
@@ -10,6 +9,23 @@ import PaymentCard from './components/PaymentCard/PaymentCard';
 
 export default function CheckoutPage() {
 
+  const [data, setData] = useState([]);
+  
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  function fetchData(){
+    fetch(`http://localhost:5000/api/cart`,{
+      method: "GET",
+      credentials: 'include'
+    })
+    .then((response) => response.json())
+    .then((result) => {
+      setData(result);
+    });
+  }
+
   return (
     <div className="CheckoutPage">
       <AppBar position="sticky" elevation={0}>
@@ -19,7 +35,7 @@ export default function CheckoutPage() {
         <Grid item md={7} xs={7}>
           <AddressCard/>
           <PaymentCard/>
-          <CartCard/>
+          <CartCard data={data}/>
         </Grid>
         <Grid item md={3} xs={3}
           sx={{
@@ -28,7 +44,7 @@ export default function CheckoutPage() {
             right:0,
           }}
         >
-          <SummaryCard/>
+          <SummaryCard data={data}/>
         </Grid>
       </Grid>
     </div>

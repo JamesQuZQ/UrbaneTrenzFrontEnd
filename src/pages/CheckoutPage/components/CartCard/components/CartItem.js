@@ -19,7 +19,10 @@ const theme = createTheme({
   }
 });
 
-export default function CartItem() {
+export default function CartItem(props) {
+
+  var {item, count} = props;
+
   return (
     <div className="CartItem">
       <Card sx={{
@@ -33,6 +36,7 @@ export default function CartItem() {
           direction="column"
           spacing={0}
           columns={5}
+          sx={{width:"100%"}}
         >
           <Grid
             item
@@ -47,7 +51,7 @@ export default function CartItem() {
                 <CardMedia
                   component="img"
                   height="140"
-                  image="/test.jpg"
+                  image={item["ImageURL"]}
                   alt="test"
                   sx={{objectFit: "contain"}}
                 />
@@ -59,6 +63,7 @@ export default function CartItem() {
                 direction="column"
                 spacing={0}
                 columns={10}
+                
               >
                 <Grid item md={3}>
                   <CardActionArea>
@@ -73,20 +78,17 @@ export default function CartItem() {
                         mb:0.5
                       }}
                       >
-                      Doodle Kids Girls Pink I love Shopping Top 
-                      Doodle Kids Girls Pink I love Shopping Top 
-                      Doodle Kids Girls Pink I love Shopping Top
-                      Doodle Kids Girls Pink I love Shopping Top
+                      {item["ProductTitle"]}
                     </Typography>
                   </CardActionArea>
                 </Grid>
                 <Grid item md={1}>
                   <Typography variant="caption" color="green">
-                    In Stock
+                    {item["StockCoung"] != 0 ? "In Stock": "Out of Stock"}
                   </Typography>
                 </Grid>
                 <Grid item md={5}>
-                  123
+                  {item["Gender"]}|{item["SubCategory"]}|{item["Colour"]}|{item["ProductUsage"]}
                 </Grid>
               </Grid>
             </Grid>
@@ -97,7 +99,7 @@ export default function CartItem() {
             {/* Price Column */}
             <Grid item md={1} xs={1}>
               <Typography variant="body2" color="text.secondary">
-                $1000
+                ${item["Price"]}
               </Typography>
             </Grid>
           </Grid>  
@@ -114,22 +116,7 @@ export default function CartItem() {
             columns={20}
           >
             <ThemeProvider theme={theme}>
-              <Grid item md={2} sm={4} sx={{textAlign:"right", mr:2}}>
-                <Button size="small" variant="text" color="pureBlack" startIcon={<DeleteOutlineIcon size="small"/>}>
-                  Remove
-                </Button>
-              </Grid>
-              <Grid 
-                item 
-                md={4} 
-                sm={8}
-                sx={{textAlign:"right"}}
-              >
-                <Button size="small" variant="text" startIcon={<FavoriteBorderIcon size="small"/>}>
-                  Save for Later
-                </Button>
-              </Grid>
-              <Grid item md={.5} xs={1}></Grid>
+
               <Grid item md={3} sm={6}>
                 <Grid 
                   container 
@@ -141,51 +128,18 @@ export default function CartItem() {
                 >
                   <Grid item md={1} xs={1}>
                     <Box
-                      sx={{
-                        border:'1px solid darkgray',
-                        borderRight:0,
-                        borderTopLeftRadius:'50%',
-                        borderBottomLeftRadius:'50%',
-                        height:'100%'
-                      }}
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      <IconButton size="small"><RemoveIcon /></IconButton>
-                    </Box>
-                  </Grid>
-                  <Grid item md={1} xs={1}>
-                    <Box
                         sx={{
                           border:'1px solid darkgray',
-                          borderLeft:0,
-                          borderRight:0,
                           height:'100%',
                         }}
                         display="flex"
                         alignItems="center"
                         justifyContent="center"
                       >
-                        0
+                        x{count}
                     </Box>
                   </Grid>
-                  <Grid item md={1} xs={1} justifyContent='center' alignItems='center' >
-                    <Box
-                        sx={{
-                          border:'1px solid darkgray',
-                          borderLeft:0,
-                          borderTopRightRadius:'50%',
-                          borderBottomRightRadius:'50%',
-                          height:'100%'
-                        }}
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                      >
-                        <IconButton size="small"><AddIcon /></IconButton>
-                    </Box>
-                  </Grid>
+
                 </Grid>
               </Grid>
               <Grid item md={.5} xs={1}></Grid>

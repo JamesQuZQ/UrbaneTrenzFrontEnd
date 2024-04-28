@@ -1,7 +1,34 @@
-import { Card, Divider, Box, Typography, Button } from "@mui/material";
+import { Card, Divider, Box, Typography, Button, Alert } from "@mui/material";
 import { Link } from 'react-router-dom';
 
-export default function SummaryCard() {
+export default function SummaryCard(props) {
+
+  var {data} = props;
+
+  function placeOrder(){
+    fetch(`http://localhost:5000/api/placeOrder`,{
+      method: "GET",
+      credentials: 'include'
+    })
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.error){
+        alert('One of the items you selected was sold out!');
+        window.location = '/cart';
+      } else {
+        window.location = '/confirm';
+      }
+    });
+  }
+
+  function sum( ) {
+    var sum = 0;
+    for( var product in data ) {
+      sum += data[product].count * data[product].details.Price
+    }
+    return sum;
+  }
+  
   return (
     <div className="CartCard">
       <Card sx={{
@@ -20,8 +47,8 @@ export default function SummaryCard() {
             variant="contained"
             fullWidth={true}
             component={Link}
-            to="/checkout"
             sx={{borderRadius: 25}}
+            onClick={placeOrder}
           >
             Place Order
           </Button>
@@ -52,7 +79,7 @@ export default function SummaryCard() {
           <Typography
             variant="body2"
           >
-            $1000
+            ${data?sum():0}
           </Typography>
         </Box>
 
@@ -89,7 +116,7 @@ export default function SummaryCard() {
           <Typography
             variant="body2"
           >
-            $100
+            ${data?parseInt(sum()*0.1, 10):0}
           </Typography>
         </Box>
 
@@ -133,7 +160,7 @@ export default function SummaryCard() {
             sx={{ fontWeight: 'bold' }}
             color="green"
           >
-            $1000
+            ${data?parseInt(sum()*1.1, 10):0}
           </Typography>
         </Box>
 

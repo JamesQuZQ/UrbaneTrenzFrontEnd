@@ -49,6 +49,7 @@ export default function ShippingSelector() {
         <FormControlLabel 
           value="expedited" 
           control={<Radio />} 
+          disabled
           sx={{mb:1}}
           label={
             <Box
@@ -72,6 +73,7 @@ export default function ShippingSelector() {
         <FormControlLabel 
           value="express" 
           control={<Radio />}
+          disabled
           sx={{mb:1}}
           label={
             <Box

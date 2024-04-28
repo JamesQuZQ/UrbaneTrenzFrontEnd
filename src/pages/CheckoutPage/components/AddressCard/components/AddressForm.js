@@ -18,7 +18,6 @@ export default function AddressForm(props){
   }
 
   const handleClose = (event, reason) => {
-    console.log(event)
     if (reason && reason === "backdropClick") 
       return;
     props.handleClose();
@@ -26,7 +25,6 @@ export default function AddressForm(props){
 
   const formSubmit = (data, event) => {
     event.preventDefault();
-    console.log(data);
     props.setData(data);
     handleClose();
   }

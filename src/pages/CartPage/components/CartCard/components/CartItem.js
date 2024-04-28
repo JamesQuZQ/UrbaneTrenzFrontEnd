@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { Typography, Card, CardContent, CardMedia, CardActionArea, 
   Grid, Box, Button, IconButton, Icon } from "@mui/material";
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -19,7 +20,28 @@ const theme = createTheme({
   }
 });
 
-export default function CartItem() {
+
+export default function CartItem(props) {
+
+  const {item, count, fetchData} = props
+
+  useEffect(() => {
+    if (parseInt(count) > item["StockCount"]) {
+      changeItemQuantity(item["StockCount"])
+    }
+  })
+
+  function changeItemQuantity(newAmount){
+    fetch(`http://localhost:5000/api/cartAdjust?id=${item["ProductID"]}&count=${newAmount}`,{
+      method: "GET",
+      credentials: 'include'
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        fetchData()
+      });
+  }
+
   return (
     <div className="CartItem">
       <Card sx={{
@@ -33,6 +55,7 @@ export default function CartItem() {
           direction="column"
           spacing={0}
           columns={5}
+          sx={{width:"100%"}}
         >
           <Grid
             item
@@ -47,7 +70,7 @@ export default function CartItem() {
                 <CardMedia
                   component="img"
                   height="140"
-                  image="/test.jpg"
+                  image={item["ImageURL"]}
                   alt="test"
                   sx={{objectFit: "contain"}}
                 />
@@ -73,20 +96,17 @@ export default function CartItem() {
                         mb:0.5
                       }}
                       >
-                      Doodle Kids Girls Pink I love Shopping Top 
-                      Doodle Kids Girls Pink I love Shopping Top 
-                      Doodle Kids Girls Pink I love Shopping Top
-                      Doodle Kids Girls Pink I love Shopping Top
+                      {item["ProductTitle"]}
                     </Typography>
                   </CardActionArea>
                 </Grid>
                 <Grid item md={1}>
-                  <Typography variant="caption" color="green">
-                    In Stock
+                  <Typography variant="caption" color={item["StockCount"] != 0 ? "green": "red"}>
+                    {item["StockCount"] != 0 ? "In Stock": "Out of Stock"}
                   </Typography>
                 </Grid>
                 <Grid item md={5}>
-                  123
+                  {item["Gender"]}|{item["SubCategory"]}|{item["Colour"]}|{item["ProductUsage"]}
                 </Grid>
               </Grid>
             </Grid>
@@ -97,7 +117,7 @@ export default function CartItem() {
             {/* Price Column */}
             <Grid item md={1} xs={1}>
               <Typography variant="body2" color="text.secondary">
-                $1000
+                ${item["Price"]}
               </Typography>
             </Grid>
           </Grid>  
@@ -115,11 +135,21 @@ export default function CartItem() {
           >
             <ThemeProvider theme={theme}>
               <Grid item md={2} sm={4} sx={{textAlign:"right", mr:2}}>
-                <Button size="small" variant="text" color="pureBlack" startIcon={<DeleteOutlineIcon size="small"/>}>
+                <Button 
+                  size="small" 
+                  variant="text" 
+                  color="pureBlack"
+                  onClick={()=>changeItemQuantity(0)} 
+                  startIcon={<DeleteOutlineIcon size="small"/>}
+                  sx={{
+                    fontSize:10,
+                    mb: 0.2
+                  }}
+                >
                   Remove
                 </Button>
               </Grid>
-              <Grid 
+              {/* <Grid 
                 item 
                 md={4} 
                 sm={8}
@@ -128,7 +158,7 @@ export default function CartItem() {
                 <Button size="small" variant="text" startIcon={<FavoriteBorderIcon size="small"/>}>
                   Save for Later
                 </Button>
-              </Grid>
+              </Grid> */}
               <Grid item md={.5} xs={1}></Grid>
               <Grid item md={3} sm={6}>
                 <Grid 
@@ -152,7 +182,13 @@ export default function CartItem() {
                       alignItems="center"
                       justifyContent="center"
                     >
-                      <IconButton size="small"><RemoveIcon /></IconButton>
+                      <IconButton size="small"
+                        onClick={()=>{
+                          changeItemQuantity(parseInt(count) - 1)
+                        }} 
+                      >
+                        <RemoveIcon />
+                      </IconButton>
                     </Box>
                   </Grid>
                   <Grid item md={1} xs={1}>
@@ -167,7 +203,7 @@ export default function CartItem() {
                         alignItems="center"
                         justifyContent="center"
                       >
-                        0
+                        {count}
                     </Box>
                   </Grid>
                   <Grid item md={1} xs={1} justifyContent='center' alignItems='center' >
@@ -183,7 +219,13 @@ export default function CartItem() {
                         alignItems="center"
                         justifyContent="center"
                       >
-                        <IconButton size="small"><AddIcon /></IconButton>
+                        <IconButton size="small"
+                          onClick={()=>{
+                            if (parseInt(count) < item["StockCount"]) {
+                              changeItemQuantity(parseInt(count) + 1)
+                            }
+                          }} 
+                        ><AddIcon /></IconButton>
                     </Box>
                   </Grid>
                 </Grid>

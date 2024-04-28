@@ -1,14 +1,11 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import { Link } from "react-router-dom";
-import AppBar from '@mui/material/AppBar';
-import AnchorIcon from '@mui/icons-material/Anchor';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import InputBase from '@mui/material/InputBase';
+import {AppBar,Grid,Box,Button,InputBase,Toolbar,Typography}
+ from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -50,18 +47,34 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function renderSwitch(page) {
+function renderSwitch(page, searchParam, setSearchParam) {
+
+  const recordSearchValue = (event) => {
+    setSearchParam(event.target.value)
+  };
+
   switch(page) {
     case 'home':
       return (
-        <Search sx={{ flexGrow: 1 }}>
+        <Search alignItem="space-between" sx={{ flexGrow: 1 }}>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
-          <StyledInputBase
+          <StyledInputBase 
+            sx={{fontStyle:'italic', width:"85%" }}
             placeholder="Search Products…"
             inputProps={{ 'aria-label': 'search' }}
+            onChange={recordSearchValue}
           />
+          <Button
+            endIcon={<SubdirectoryArrowRightIcon sx={{transform:"scaleX(-1)",ml:-0.5, mb:0.5}} />}
+            sx={{mb:0.1}}
+            component={Link}
+            to={`/query/${searchParam}`}
+            color="inherit"
+          >
+            Search
+          </Button>
         </Search>
       );
     default:
@@ -80,29 +93,34 @@ function renderSwitch(page) {
 
 export default function Header(props){
 
+  const [searchParam, setSearchParam] = useState([]);
+
   return (
-    <AppBar position="static" component="nav" elevation={0}>
+    <AppBar 
+      position="static" 
+      component="nav" 
+      elevation={0}
+    >
       <Toolbar>
         <Button 
           component={Link}
           to="/"
-          startIcon={<AnchorIcon/>}
           color="inherit"
+          sx={{
+            fontSize: 30,
+            fontFamily: "AnotherDanger"
+          }}
         >
-          Shopping Website
+          Urbane Trenz
         </Button>
         {
-        renderSwitch(props.page)
+        renderSwitch(props.page, searchParam, setSearchParam)
         }
-        <Button
-          color="inherit"
-        >
-          Orders
-        </Button>
         <Button
           component={Link}
           to="/cart"
           color="inherit"
+          endIcon={<ShoppingCartIcon/>}
         >
           Cart
         </Button>
